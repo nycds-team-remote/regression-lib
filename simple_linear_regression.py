@@ -30,3 +30,6 @@ def get_simple_linear_model(points: List[Point]) -> SimpleLinearModel:
     intercept = ((x2Sum * ySum) - (xSum * xySum)) / ((N * x2Sum) - (xSum ** 2))
 
     return SimpleLinearModel(intercept, coef)
+
+
+# def score(model: SimpleLinearModel, points: List[Point])
