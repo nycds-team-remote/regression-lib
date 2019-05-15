@@ -13,23 +13,38 @@ class SimpleLinearModel(NamedTuple):
     coef: float
 
 
+# similar to construct and then fit
 def get_simple_linear_model(points: List[Point]) -> SimpleLinearModel:
 
     N = len(points)
 
-    xySum: float = sum([p.x * p.y for p in points])
+    xySum = sum([p.x * p.y for p in points])
 
-    xSum: float = sum([p.x for p in points])
+    xSum = sum([p.x for p in points])
 
-    x2Sum: float = sum([p.x ** 2 for p in points])
+    x2Sum = sum([p.x ** 2 for p in points])
 
-    ySum: float = sum([p.y for p in points])
+    ySum = sum([p.y for p in points])
 
     coef = ((N * xySum) - (xSum * ySum)) / ((N * x2Sum) - (xSum ** 2))
 
-    intercept = ((x2Sum * ySum) - (xSum * xySum)) / ((N * x2Sum) - (xSum ** 2))
+    intercept: float = ((x2Sum * ySum) - (xSum * xySum)) / (
+        (N * x2Sum) - (xSum ** 2)
+    )
 
     return SimpleLinearModel(intercept, coef)
 
 
-# def score(model: SimpleLinearModel, points: List[Point])
+def predict1(model: SimpleLinearModel, x: float) -> float:
+    return model.intercept + model.coef * x
+
+
+def predict(model: SimpleLinearModel, xs: List[float]) -> List[float]:
+    return [predict1(model, x) for x in xs]
+
+
+def score(model: SimpleLinearModel, points: List[Point]) -> float:
+    return sum(
+        ((model.intercept + model.coef * point.x) - point.y) ** 2
+        for point in points
+    )

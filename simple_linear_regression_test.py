@@ -4,6 +4,7 @@ from simple_linear_regression import (
     Point,
     SimpleLinearModel,
     get_simple_linear_model,
+    score,
 )
 
 
@@ -15,6 +16,8 @@ def test_get_simple_linear_model_simple() -> None:
     expected = SimpleLinearModel(intercept=1, coef=0.5)
 
     assert result == expected
+
+    assert score(result, points) == 0.0
 
 
 def test_get_simple_linear_model_complex() -> None:
