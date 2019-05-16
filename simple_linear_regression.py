@@ -1,4 +1,5 @@
 from typing import NamedTuple, List
+import numpy as np
 
 
 class Point(NamedTuple):
@@ -43,8 +44,24 @@ def predict(model: SimpleLinearModel, xs: List[float]) -> List[float]:
     return [predict1(model, x) for x in xs]
 
 
-def score(model: SimpleLinearModel, points: List[Point]) -> float:
+# u
+def regression_sum_squares(
+    model: SimpleLinearModel, points: List[Point]
+) -> float:
     return sum(
-        ((model.intercept + model.coef * point.x) - point.y) ** 2
-        for point in points
+        ((model.intercept + model.coef * p.x) - p.y) ** 2 for p in points
     )
+
+
+# v
+def residual_sum_squares(ys: List[float]) -> float:
+    mean: float = np.average(ys)
+    return sum([(y - mean) ** 2 for y in ys])
+
+
+def score(model: SimpleLinearModel, points: List[Point]) -> float:
+    u = regression_sum_squares(model, points)
+    v = residual_sum_squares([p.y for p in points])
+    print("u", u)
+    print("v", v)
+    return 1 - u / v
