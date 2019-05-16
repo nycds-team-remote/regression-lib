@@ -62,6 +62,4 @@ def residual_sum_squares(ys: List[float]) -> float:
 def score(model: SimpleLinearModel, points: List[Point]) -> float:
     u = regression_sum_squares(model, points)
     v = residual_sum_squares([p.y for p in points])
-    print("u", u)
-    print("v", v)
     return 1 - u / v
