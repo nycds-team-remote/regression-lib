@@ -44,7 +44,6 @@ def predict(model: SimpleLinearModel, xs: List[float]) -> List[float]:
     return [predict1(model, x) for x in xs]
 
 
-# u
 def regression_sum_squares(
     model: SimpleLinearModel, points: List[Point]
 ) -> float:
@@ -53,7 +52,6 @@ def regression_sum_squares(
     )
 
 
-# v
 def residual_sum_squares(ys: List[float]) -> float:
     mean: float = np.average(ys)
     return sum([(y - mean) ** 2 for y in ys])
